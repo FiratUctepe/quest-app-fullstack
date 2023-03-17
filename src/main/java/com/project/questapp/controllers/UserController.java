@@ -1,7 +1,6 @@
 package com.project.questapp.controllers;
 
 import com.project.questapp.entities.User;
-import com.project.questapp.repos.UserRepository;
 import com.project.questapp.services.UserService;
 import org.springframework.web.bind.annotation.*;
 
@@ -10,27 +9,25 @@ import java.util.List;
 @RestController
 @RequestMapping("/users")
 public class UserController {
-    public UserRepository userRepository;
-    public UserService userService;
+    private UserService userService;
 
-    public UserController(UserRepository userRepository,UserService userService){
-        this.userRepository=userRepository;
+    public UserController(UserService userService){
         this.userService=userService;
     }
 
     @GetMapping
     public List<User> getAllUsers(){
-        return userRepository.findAll();
+        return userService.getAllUsers();
     }
 
     @PostMapping
     public User createUser(@RequestBody User newUser){
-        return userRepository.save(newUser);
+        return userService.createUser(newUser);
     }
 
     @GetMapping("/{userId}")
     public User getOneUser(@PathVariable Long userId){
-        return userRepository.findById(userId).orElse(null);
+        return userService.getOneUser(userId);
     }
 
     @PutMapping("/{userId}")
@@ -40,6 +37,6 @@ public class UserController {
 
     @DeleteMapping("/{userId}")
     public void deleteOneUser(@PathVariable Long userId){
-        userRepository.deleteById(userId);
+        userService.deleteOneUser(userId);
     }
 }
