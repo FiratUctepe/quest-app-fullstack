@@ -20,8 +20,8 @@ public class PostController {
     }
 
     @GetMapping
-    public List<Post> getAllPosts(@RequestParam Long userId){
-        return postService.getAllPosts(userId);
+    public List<Post> getAllPostsByUserId(@RequestParam(value = "userId") Long userId){
+        return postService.getAllPostsByUserId(userId);
     }
 
     @GetMapping("/{postId}")

@@ -21,11 +21,10 @@ public class PostService {
         this.userService=userService;
     }
 
-    public List<Post> getAllPosts(Long userId) {
-        if(userId != null){
+    public List<Post> getAllPostsByUserId(Long userId) {
+
             return postRepository.findByUserId(userId);
-        }else
-            return postRepository.findAll();
+
     }
 
     public Post getOnePostById(Long postId) {
