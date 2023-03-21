@@ -9,7 +9,7 @@ import java.util.List;
 
 public interface PostRepository extends JpaRepository<Post,Long> {
 
-    @Query(value = "select * from posts p where p.user_id = :userId",
+    @Query(value = "select p from posts p where p.user_id= :userId",
             nativeQuery = true)
     List<Post> findByUserId(@Param("userId") Long userId);
 }
