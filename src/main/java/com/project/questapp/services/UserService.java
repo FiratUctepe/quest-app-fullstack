@@ -50,4 +50,7 @@ public class UserService {
         return null;
     }
 
+    public User getOneUser(Long userId) {
+        return userRepository.findById(userId).get();
+    }
 }

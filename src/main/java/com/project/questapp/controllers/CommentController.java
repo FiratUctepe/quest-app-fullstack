@@ -20,7 +20,7 @@ public class CommentController {
     }
 
     @GetMapping
-    public List<Comment> getAllComments(@RequestParam Optional<Long> userId,@RequestParam Optional<Long> postId){
+    public List<Comment> getAllComments(@RequestParam(required = false) Long userId,@RequestParam Long postId){
         return commentService.getAllCommentWithParam(userId,postId);
     }
 
@@ -35,11 +35,11 @@ public class CommentController {
     }
 
     @PutMapping("/{commentId}")
-    public Comment uptadeOneComment(@PathVariable Long commentId,@RequestBody CommentUpdateRequest commentUpdateRequest){
+    public Comment updateOneComment(@PathVariable Long commentId,@RequestBody CommentUpdateRequest commentUpdateRequest){
         return commentService.updateOneComment(commentId,commentUpdateRequest);
     }
 
-    @DeleteMapping("/{commetId}")
+    @DeleteMapping("/{commentId}")
     public void deleteOneComment(@PathVariable Long commentId){
         commentService.deleteOneCommentById(commentId);
     }

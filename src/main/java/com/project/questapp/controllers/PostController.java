@@ -11,6 +11,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/posts")
+@CrossOrigin
 public class PostController {
 
     private PostService postService;
@@ -20,7 +21,7 @@ public class PostController {
     }
 
     @GetMapping
-    public List<Post> getAllPostsByUserId(@RequestParam(value = "userId") Long userId){
+    public List<Post> getAllPostsByUserId(@RequestParam(required = false) Long userId){
         return postService.getAllPostsByUserId(userId);
     }
 

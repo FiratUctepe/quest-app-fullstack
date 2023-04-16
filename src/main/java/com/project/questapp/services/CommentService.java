@@ -7,9 +7,6 @@ import com.project.questapp.repos.CommentRepository;
 import com.project.questapp.requests.CommentCreateRequest;
 import com.project.questapp.requests.CommentUpdateRequest;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
 import java.util.Optional;
@@ -28,13 +25,15 @@ public class CommentService {
         this.postService=postService;
     }
 
-    public List<Comment> getAllCommentWithParam(Optional<Long> userId, Optional<Long> postId) {
-        if(userId.isPresent() && postId.isPresent()){
-            return commentRepository.findByUserIdAndPostId(userId.get(),postId.get());
-        } else if (userId.isPresent()) {
-            return commentRepository.findByUserId(userId.get());
-        }else if(postId.isPresent()){
-            return commentRepository.findByPostId(postId.get());
+    public List<Comment> getAllCommentWithParam(Long userId, Long postId) {
+
+
+        if(userId != null && postId != null){
+            return commentRepository.findByUserIdAndPostId(userId,postId);
+        } else if (userId != null) {
+            return commentRepository.findByUserId(userId);
+        }else if(postId != null){
+            return commentRepository.findByPostId(postId);
         }
             return commentRepository.findAll();
     }
