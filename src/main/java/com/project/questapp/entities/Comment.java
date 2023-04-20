@@ -14,16 +14,16 @@ import java.util.Date;
 public class Comment {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="post_id", nullable=false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JsonIgnore
     Post post;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="user_id", nullable=false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JsonIgnore

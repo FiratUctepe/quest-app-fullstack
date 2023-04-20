@@ -2,6 +2,8 @@ package com.project.questapp.services;
 
 import com.project.questapp.entities.User;
 import com.project.questapp.repos.UserRepository;
+import com.project.questapp.requests.UserCreateRequest;
+import com.project.questapp.requests.UserUpdateRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -22,8 +24,14 @@ public class UserService {
     }
 
 
-    public User createUser(User newUser){
-        return userRepository.save(newUser);
+    public User createUser(UserCreateRequest newUser){
+        User user = new User();
+
+        user.setUserName(newUser.getUserName());
+        user.setPassword(newUser.getPassword());
+        user.setAvatar(newUser.getAvatar());
+
+        return userRepository.save(user);
     }
 
 
@@ -35,7 +43,7 @@ public class UserService {
     public void deleteOneUser(Long userId){
         userRepository.deleteById(userId);
     }
-    public User updateOneUser(Long userId,User newUser){
+    public User updateOneUser(Long userId, UserUpdateRequest newUser){
         User user = userRepository.findById(userId).get();
 
         if(user != null){

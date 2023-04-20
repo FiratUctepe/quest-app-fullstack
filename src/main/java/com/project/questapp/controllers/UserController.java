@@ -1,6 +1,8 @@
 package com.project.questapp.controllers;
 
 import com.project.questapp.entities.User;
+import com.project.questapp.requests.UserCreateRequest;
+import com.project.questapp.requests.UserUpdateRequest;
 import com.project.questapp.services.UserService;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,7 +23,7 @@ public class UserController {
     }
 
     @PostMapping
-    public User createUser(@RequestBody User newUser){
+    public User createUser(@RequestBody UserCreateRequest newUser){
         return userService.createUser(newUser);
     }
 
@@ -31,7 +33,7 @@ public class UserController {
     }
 
     @PutMapping("/{userId}")
-    public User updateOneUser(@PathVariable Long userId,@RequestBody User newUser){
+    public User updateOneUser(@PathVariable Long userId,@RequestBody UserUpdateRequest newUser){
         return userService.updateOneUser(userId,newUser);
     }
 

@@ -21,23 +21,15 @@ public class PostService {
         this.userService=userService;
     }
 
-    public List<Post> getAllPostsByUserId(Long userId) {
-
-            return postRepository.findByUserId(userId);
-    }
-
     public Post getOnePostById(Long postId) {
         return postRepository.findById(postId).orElse(null);
     }
 
     public Post createOnePost(PostCreateRequest postCreateRequest) {
-        User user =userService.getOneUser(postCreateRequest.getUserId());
-        if(user == null){
-            return null;
-        }
+        User user = userService.getOneUserById(postCreateRequest.getUserId());
 
         Post toSave=new Post();
-        toSave.setId(postCreateRequest.getId());
+
         toSave.setText(postCreateRequest.getText());
         toSave.setTitle(postCreateRequest.getTitle());
         toSave.setUser(user);
@@ -59,5 +51,13 @@ public class PostService {
 
     public void deleteOnePost(Long postId) {
         postRepository.deleteById(postId);
+    }
+
+    public List<Post> getAllPost() {
+        return postRepository.findAll();
+    }
+
+    public List<Post> getOPostByUserId(Long userId) {
+        return postRepository.findAllByUser_Id(userId);
     }
 }

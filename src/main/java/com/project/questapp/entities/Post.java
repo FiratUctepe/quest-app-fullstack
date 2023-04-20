@@ -13,14 +13,11 @@ import java.util.Date;
 public class Post {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     Long id;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumns({
-            @JoinColumn(
-                    name = "user_id",
-                    referencedColumnName = "id")})
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name="user_id", nullable=false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     User user;
 
@@ -29,7 +26,4 @@ public class Post {
     @Lob
     @Column(columnDefinition = "text",nullable = false)
     String text;
-
-    @Temporal(TemporalType.TIMESTAMP)
-    Date createDate;
 }

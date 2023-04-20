@@ -20,9 +20,14 @@ public class PostController {
         this.postService=postService;
     }
 
+    @GetMapping
+    public List<Post> getAllPost(){
+        return postService.getAllPost();
+    }
+
     @GetMapping("/user/{userId}")
-    public List<Post> getAllPostsByUserId(@PathVariable Long userId){
-        return postService.getAllPostsByUserId(userId);
+    public List<Post> getPostByUserId(@PathVariable Long userId){
+        return postService.getOPostByUserId(userId);
     }
 
     @GetMapping("/post/{postId}")
