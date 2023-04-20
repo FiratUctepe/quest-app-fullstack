@@ -24,7 +24,6 @@ public class PostService {
     public List<Post> getAllPostsByUserId(Long userId) {
 
             return postRepository.findByUserId(userId);
-
     }
 
     public Post getOnePostById(Long postId) {
