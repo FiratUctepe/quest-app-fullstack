@@ -36,8 +36,6 @@ public class CommentService {
         }
             return commentRepository.findAll();
     }
-
-
     public Comment getOneCommentById(Long commentId) {
         return commentRepository.findById(commentId).get();
     }
