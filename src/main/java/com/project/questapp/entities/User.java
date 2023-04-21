@@ -18,7 +18,9 @@ public class User {
     String userName;
     String password;
     int avatar;
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-    private List<Post> posts;
+
+//    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+//    @JsonIgnore
+//    private List<Post> posts;
 
 }

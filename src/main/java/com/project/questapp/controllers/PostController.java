@@ -21,16 +21,11 @@ public class PostController {
     }
 
     @GetMapping
-    public List<Post> getAllPost(){
-        return postService.getAllPost();
+    public List<Post> getPostsByUserId(@RequestParam Optional<Long> userId){
+        return postService.getPostsByUserId(userId);
     }
 
-    @GetMapping("/user/{userId}")
-    public List<Post> getPostByUserId(@PathVariable Long userId){
-        return postService.getOPostByUserId(userId);
-    }
-
-    @GetMapping("/post/{postId}")
+    @GetMapping("/{postId}")
         public Post getOnePost(@PathVariable Long postId){
         return postService.getOnePostById(postId);
     }

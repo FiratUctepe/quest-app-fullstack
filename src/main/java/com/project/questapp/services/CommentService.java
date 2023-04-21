@@ -7,6 +7,7 @@ import com.project.questapp.repos.CommentRepository;
 import com.project.questapp.requests.CommentCreateRequest;
 import com.project.questapp.requests.CommentUpdateRequest;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 import java.util.Optional;
@@ -25,15 +26,13 @@ public class CommentService {
         this.postService=postService;
     }
 
-    public List<Comment> getAllCommentWithParam(Long userId, Long postId) {
-
-
-        if(userId != null && postId != null){
-            return commentRepository.findByUserIdAndPostId(userId,postId);
-        } else if (userId != null) {
-            return commentRepository.findByUserId(userId);
-        }else if(postId != null){
-            return commentRepository.findByPostId(postId);
+    public List<Comment> getAllCommentWithParam(Optional<Long> userId,Optional<Long> postId) {
+        if(userId.isPresent() && postId.isPresent()){
+            return commentRepository.findByUserIdAndPostId(userId.get(),postId.get());
+        } else if (userId.isPresent()) {
+            return commentRepository.findByUserId(userId.get());
+        }else if(postId.isPresent()){
+            return commentRepository.findByPostId(postId.get());
         }
             return commentRepository.findAll();
     }
@@ -48,7 +47,6 @@ public class CommentService {
         Post post = postService.getOnePostById(commentCreateRequest.getPostId());
         if(user != null && post != null){
             Comment commentToSave = new Comment();
-            commentToSave.setId(commentCreateRequest.getId());
             commentToSave.setText(commentCreateRequest.getText());
             commentToSave.setUser(user);
             commentToSave.setPost(post);

@@ -19,8 +19,8 @@ public class CommentController {
         this.commentService=commentService;
     }
 
-    @GetMapping("/{userId}/{postId}")
-    public List<Comment> getAllComments(@PathVariable Long userId,@PathVariable Long postId){
+    @GetMapping
+    public List<Comment> getAllComments(@RequestParam Optional<Long> userId,@RequestParam Optional<Long> postId){
         return commentService.getAllCommentWithParam(userId,postId);
     }
 

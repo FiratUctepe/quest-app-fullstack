@@ -57,7 +57,9 @@ public class PostService {
         return postRepository.findAll();
     }
 
-    public List<Post> getOPostByUserId(Long userId) {
-        return postRepository.findAllByUser_Id(userId);
+    public List<Post> getPostsByUserId(Optional<Long> userId) {
+        if(userId.isPresent())
+            return postRepository.findAllByUser_Id(userId.get());
+        return postRepository.findAll();
     }
 }
