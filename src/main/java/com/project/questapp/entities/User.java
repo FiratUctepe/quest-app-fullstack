@@ -13,14 +13,14 @@ import java.util.List;
 public class User {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
     String userName;
     String password;
     int avatar;
 
-//    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-//    @JsonIgnore
-//    private List<Post> posts;
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @JsonIgnore
+    private List<Post> posts;
 
 }
