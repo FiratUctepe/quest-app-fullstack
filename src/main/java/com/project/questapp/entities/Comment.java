@@ -33,6 +33,8 @@ public class Comment {
     @Column(columnDefinition="text")
     String text;
 
+
+
     @Temporal(TemporalType.TIMESTAMP)
     Date createDate;
 }
