@@ -3,6 +3,7 @@ package com.project.questapp.controllers;
 import com.project.questapp.entities.Post;
 import com.project.questapp.requests.PostCreateRequest;
 import com.project.questapp.requests.PostUpdateRequest;
+import com.project.questapp.responses.PostResponse;
 import com.project.questapp.services.PostService;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,27 +22,28 @@ public class PostController {
     }
 
     @GetMapping
-    public List<Post> getPostsByUserId(@RequestParam Optional<Long> userId){
-        return postService.getPostsByUserId(userId);
-    }
-
-    @GetMapping("/{postId}")
-        public Post getOnePost(@PathVariable Long postId){
-        return postService.getOnePostById(postId);
+    public List<PostResponse> getAllPosts(@RequestParam Optional<Long> userId) {
+        return postService.getAllPosts(userId);
     }
 
     @PostMapping
-    public Post createOnePost(@RequestBody PostCreateRequest postCreateRequest){
-        return postService.createOnePost(postCreateRequest);
+    public Post createOnePost(@RequestBody PostCreateRequest newPostRequest) {
+        return postService.createOnePost(newPostRequest);
+    }
+
+
+    @GetMapping("/{postId}")
+    public PostResponse getOnePost(@PathVariable Long postId) {
+        return postService.getOnePostByIdWithLikes(postId);
     }
 
     @PutMapping("/{postId}")
-    public Post updateOnePost(@PathVariable Long postId, @RequestBody PostUpdateRequest postUpdateRequest){
-        return postService.updateOnePost(postId,postUpdateRequest);
+    public Post updateOnePost(@PathVariable Long postId, @RequestBody PostUpdateRequest updatePost) {
+        return postService.updateOnePost(postId, updatePost);
     }
 
     @DeleteMapping("/{postId}")
-    public void deleteOnePost(@PathVariable Long postId){
+    public void deleteOnePost(@PathVariable Long postId) {
         postService.deleteOnePost(postId);
     }
 
