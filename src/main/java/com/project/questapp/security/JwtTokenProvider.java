@@ -9,10 +9,11 @@ import java.util.Date;
 
 @Component
 public class JwtTokenProvider {
-    @Value("{questapp.app.secret}")
+    @Value("${questapp.app.secret}")
     private String APP_SECRET;
-    @Value("{questapp.expires.in}")
+    @Value("${questapp.expires.in}")
     private long EXPIRES_IN;
+
 
     public String generateJwtToken(Authentication auth){
         JwtUserDetails userDetails = (JwtUserDetails) auth.getPrincipal();
@@ -24,6 +25,7 @@ public class JwtTokenProvider {
 
     Long getUserIdFromJwt(String token){
         Claims claims = Jwts.parser().setSigningKey(APP_SECRET).parseClaimsJws(token).getBody();
+
         return Long.parseLong(claims.getSubject());
     }
 
