@@ -58,7 +58,11 @@ public class UserService {
         return null;
     }
 
-    public User getOneUser(Long userId) {
-        return userRepository.findById(userId).get();
+    public User getOneUserByUserName(String userName) {
+        return userRepository.findByUserName(userName);
+    }
+
+    public void saveOneUser(User user){
+        userRepository.save(user);
     }
 }
