@@ -4,8 +4,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.config.BeanIds;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -13,6 +11,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.DefaultSecurityFilterChain;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
@@ -22,8 +21,6 @@ import org.springframework.web.filter.CorsFilter;
 import com.project.questapp.security.JwtAuthenticationEntryPoint;
 import com.project.questapp.security.JwtAuthenticationFilter;
 import com.project.questapp.services.UserDetailsServiceImpl;
-
-import javax.servlet.Filter;
 
 @Configuration
 @EnableWebSecurity
@@ -71,9 +68,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         return new CorsFilter(source);
     }
 
-    @Bean
-    public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
-        httpSecurity
+    @Override
+    protected void configure(HttpSecurity http) throws Exception {
+        http
                 .cors()
                 .and()
                 .csrf().disable()
@@ -88,16 +85,28 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .permitAll()
                 .anyRequest().authenticated();
 
-                UsernamePasswordAuthenticationFilter usernamePasswordAuthenticationFilter = new UsernamePasswordAuthenticationFilter();
-                Filter filter = (Filter) usernamePasswordAuthenticationFilter;
-                httpSecurity.addFilterBefore((javax.servlet.Filter) jwtAuthenticationFilter(), filter.getClass());
-
-        return httpSecurity.build();
+        http.addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
     }
 
-    @Bean
-    SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http) throws Exception {
-        http.csrf().disable().authorizeRequests().anyRequest().authenticated().and().httpBasic();
-        return http.build();
-    }
+//    @Bean
+//    public DefaultSecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
+//        httpSecurity
+//                .cors()
+//                .and()
+//                .csrf().disable()
+//                .exceptionHandling().authenticationEntryPoint(handler).and()
+//                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
+//                .authorizeRequests()
+//                .antMatchers(HttpMethod.GET, "/posts")
+//                .permitAll()
+//                .antMatchers(HttpMethod.GET, "/comments")
+//                .permitAll()
+//                .antMatchers("/auth/**")
+//                .permitAll()
+//                .anyRequest().authenticated();
+//
+//        httpSecurity.addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
+//
+//        return httpSecurity.build();
+//    }
 }

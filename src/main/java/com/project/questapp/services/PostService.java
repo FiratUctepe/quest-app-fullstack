@@ -1,6 +1,5 @@
 package com.project.questapp.services;
 
-import com.project.questapp.entities.Like;
 import com.project.questapp.entities.Post;
 import com.project.questapp.entities.User;
 import com.project.questapp.repos.PostRepository;
