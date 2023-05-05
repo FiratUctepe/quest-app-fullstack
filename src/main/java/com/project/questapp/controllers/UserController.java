@@ -6,6 +6,7 @@ import com.project.questapp.requests.UserUpdateRequest;
 import com.project.questapp.services.UserService;
 import org.springframework.web.bind.annotation.*;
 
+import javax.transaction.Transactional;
 import java.util.List;
 
 @RestController
@@ -41,5 +42,10 @@ public class UserController {
     @DeleteMapping("/{userId}")
     public void deleteOneUser(@PathVariable Long userId){
         userService.deleteOneUser(userId);
+    }
+
+    @GetMapping("/activity/{userId}")
+    public List<Object> getUserActivity(@PathVariable Long userId){
+       return userService.getUserActivity(userId);
     }
 }

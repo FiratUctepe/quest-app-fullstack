@@ -16,7 +16,7 @@ public class JwtAuthenticationEntryPoint implements AuthenticationEntryPoint {
 
     public void commence(HttpServletRequest request, HttpServletResponse response,
                          AuthenticationException authException) throws IOException, ServletException {
-        response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "JWT Token hatalı ya da yok."+
+        response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "JWT Token hatalı yada yok."+
                                                                     "Lütfen geçerli bir token giriniz.");
     }
 }

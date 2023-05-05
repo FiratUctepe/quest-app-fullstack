@@ -20,21 +20,17 @@ public class Comment {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="post_id", nullable=false)
     @OnDelete(action = OnDeleteAction.CASCADE)
-    @JsonIgnore
     Post post;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="user_id", nullable=false)
     @OnDelete(action = OnDeleteAction.CASCADE)
-    @JsonIgnore
     User user;
 
     @Lob
     @Column(columnDefinition="text")
     String text;
 
-
-
     @Temporal(TemporalType.TIMESTAMP)
-    Date createDate;
+    Date createdDate;
 }

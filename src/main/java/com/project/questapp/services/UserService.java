@@ -1,6 +1,9 @@
 package com.project.questapp.services;
 
 import com.project.questapp.entities.User;
+import com.project.questapp.repos.CommentRepository;
+import com.project.questapp.repos.LikeRepository;
+import com.project.questapp.repos.PostRepository;
 import com.project.questapp.repos.UserRepository;
 import com.project.questapp.requests.UserCreateRequest;
 import com.project.questapp.requests.UserUpdateRequest;
@@ -12,9 +15,16 @@ import java.util.List;
 public class UserService {
 
     private UserRepository userRepository;
+    private LikeRepository likeRepository;
+    private CommentRepository commentRepository;
+    private PostRepository postRepository;
 
-    public UserService(UserRepository userRepository){
+    public UserService(UserRepository userRepository,LikeRepository likeRepository,
+                       CommentRepository commentRepository,PostRepository postRepository){
         this.userRepository=userRepository;
+        this.likeRepository=likeRepository;
+        this.commentRepository=commentRepository;
+        this.postRepository=postRepository;
     }
 
 
@@ -63,5 +73,15 @@ public class UserService {
 
     public void saveOneUser(User user){
         userRepository.save(user);
+    }
+
+    public List<Object> getUserActivity(Long userId) {
+        List<Long> postIds = postRepository.findTopByUserId(userId);
+        commentRepository.findUserCommentsByPostId(postIds).stream().forEach(comment ->
+                System.out.println(comment.getId()+"\n"+comment.getUser().getId()+"\n\n"));
+
+        if(postIds.isEmpty())
+            return null;
+        return null;
     }
 }
