@@ -3,10 +3,11 @@ package com.project.questapp.entities;
 import javax.persistence.*;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreType;
 import lombok.Data;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
-import org.springframework.data.annotation.CreatedDate;
+
 
 import java.util.Date;
 import java.util.List;
@@ -29,9 +30,12 @@ public class Post {
     @JsonIgnore
     private List<Comment> comments;
 
+    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
+    @JsonIgnore
+    private List<Like> likes;
+
     String title;
 
-    @Lob
     @Column(columnDefinition = "text",nullable = false)
     String text;
 
