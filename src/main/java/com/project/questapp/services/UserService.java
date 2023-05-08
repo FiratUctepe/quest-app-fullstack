@@ -1,5 +1,7 @@
 package com.project.questapp.services;
 
+import com.project.questapp.entities.Comment;
+import com.project.questapp.entities.Like;
 import com.project.questapp.entities.User;
 import com.project.questapp.repos.CommentRepository;
 import com.project.questapp.repos.LikeRepository;
@@ -9,6 +11,7 @@ import com.project.questapp.requests.UserCreateRequest;
 import com.project.questapp.requests.UserUpdateRequest;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -77,11 +80,13 @@ public class UserService {
 
     public List<Object> getUserActivity(Long userId) {
         List<Long> postIds = postRepository.findTopByUserId(userId);
-        commentRepository.findUserCommentsByPostId(postIds).stream().forEach(comment ->
-                System.out.println(comment.getId()+"\n"+comment.getUser().getId()+"\n\n"));
-
         if(postIds.isEmpty())
             return null;
-        return null;
+        List<Comment> comments = commentRepository.findUserCommentsByPostId(postIds);
+        List<Like> likes = likeRepository.findUserLikesByPostId(postIds);
+        List<Object> result = new ArrayList<>();
+        result.addAll(comments);
+        result.addAll(likes);
+        return result;
     }
 }

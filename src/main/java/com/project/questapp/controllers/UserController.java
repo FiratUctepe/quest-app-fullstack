@@ -3,6 +3,7 @@ package com.project.questapp.controllers;
 import com.project.questapp.entities.User;
 import com.project.questapp.requests.UserCreateRequest;
 import com.project.questapp.requests.UserUpdateRequest;
+import com.project.questapp.responses.UserResponse;
 import com.project.questapp.services.UserService;
 import org.springframework.web.bind.annotation.*;
 
@@ -30,8 +31,8 @@ public class UserController {
     }
 
     @GetMapping("/{userId}")
-    public User getOneUser(@PathVariable Long userId){
-        return userService.getOneUserById(userId);
+    public UserResponse getOneUser(@PathVariable Long userId){
+        return new UserResponse(userService.getOneUserById(userId));
     }
 
     @PutMapping("/{userId}")

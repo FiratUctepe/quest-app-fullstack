@@ -12,6 +12,8 @@ public class PostResponse {
     private String userName;
     private String title;
     private String text;
+
+    private Post post;
     private List<LikeResponse> postLikes;
 
     public PostResponse(Post entity,List<LikeResponse> likes){
@@ -20,6 +22,7 @@ public class PostResponse {
         this.userName = entity.getUser().getUserName();
         this.title = entity.getTitle();
         this.text = entity.getText();
+        this.post = entity;
         this.postLikes = likes;
     }
 

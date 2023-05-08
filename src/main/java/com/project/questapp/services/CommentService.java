@@ -6,6 +6,7 @@ import com.project.questapp.entities.User;
 import com.project.questapp.repos.CommentRepository;
 import com.project.questapp.requests.CommentCreateRequest;
 import com.project.questapp.requests.CommentUpdateRequest;
+import com.project.questapp.responses.PostResponse;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
@@ -42,12 +43,12 @@ public class CommentService {
 
     public Comment createOneComment(CommentCreateRequest commentCreateRequest) {
         User user = userService.getOneUserById(commentCreateRequest.getUserId());
-        Post post = postService.getOnePostById(commentCreateRequest.getPostId());
+        PostResponse post = postService.getOnePostById(commentCreateRequest.getPostId());
         if(user != null && post != null){
             Comment commentToSave = new Comment();
             commentToSave.setText(commentCreateRequest.getText());
             commentToSave.setUser(user);
-            commentToSave.setPost(post);
+            commentToSave.setPost(post.getPost());
             commentToSave.setCreatedDate(new Date());
             return commentRepository.save(commentToSave);
         }else

@@ -28,8 +28,10 @@ public class PostService {
     }
 
     //tamam
-    public Post getOnePostById(Long postId) {
-        return postRepository.findById(postId).orElse(null);
+    public PostResponse getOnePostById(Long postId) {
+        Post post = postRepository.findById(postId).orElse(null);
+        List<LikeResponse> likes = likeService.getAllLikesWithParam(Optional.ofNullable(null),Optional.of(postId));
+        return new PostResponse(post,likes);
     }
 
     public PostResponse getOnePostByIdWithLikes(Long postId) {
